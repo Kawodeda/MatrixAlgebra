@@ -50,6 +50,11 @@ namespace MatrixAlgebra
             return new SquareMatrix<T>(Matrix.Multiply(scalar));
         }
 
+        public bool Equals(SquareMatrix<T> other, T epsilon)
+        {
+            return Matrix.Equals(other.Matrix, epsilon);
+        }
+
         private SquareMatrix<T> AdjugateMatrix()
         {
             SquareMatrix<T> transposed = Transpose();

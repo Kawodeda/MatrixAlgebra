@@ -157,5 +157,21 @@ namespace MatrixAlgebra
         {
             return Width == other.Width && Height == other.Height;
         }
+
+        public bool Equals(Matrix<T> other, T epsilon)
+        {
+            for (int i = 0; i < Width; i++)
+            {
+                for (int j = 0; j < Height; j++)
+                {
+                    if (!GenericMath.NearlyEquals(_elements[i, j], other[i, j], epsilon))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
     }
 }
