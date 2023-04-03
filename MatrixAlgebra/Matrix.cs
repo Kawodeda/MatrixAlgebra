@@ -8,8 +8,8 @@ namespace MatrixAlgebra
 
         public Matrix(T[,] elements)
         {
-            _elements = new T[elements.GetLength(0), elements.GetLength(1)];
-            elements.CopyTo(_elements, 0);
+            _elements = elements.Clone() as T[,] 
+                ?? new T[0, 0];
         }
 
         public T this[int i, int j]
