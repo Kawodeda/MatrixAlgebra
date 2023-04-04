@@ -35,6 +35,26 @@ namespace MatrixAlgebra
             }
         }
 
+        public static SquareMatrix<T> CreateIdentity(int size)
+        {
+            var identity = new T[size, size];
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    if (i == j)
+                    {
+                        identity[i, j] = T.One;
+                        continue;
+                    }
+
+                    identity[i, j] = T.Zero;
+                }
+            }
+
+            return new SquareMatrix<T>(identity);
+        }
+
         public SquareMatrix<T> Inverse()
         {
             return AdjugateMatrix().Multiply(T.One / Determinant());
@@ -48,6 +68,16 @@ namespace MatrixAlgebra
         public SquareMatrix<T> Multiply(T scalar)
         {
             return new SquareMatrix<T>(Matrix.Multiply(scalar));
+        }
+
+        public SquareMatrix<T> Multiply(SquareMatrix<T> matrix)
+        {
+            return new SquareMatrix<T>(Matrix.Multiply(matrix.Matrix));
+        }
+
+        public bool Equals(SquareMatrix<T> other, T epsilon)
+        {
+            return Matrix.Equals(other.Matrix, epsilon);
         }
 
         private SquareMatrix<T> AdjugateMatrix()

@@ -8,8 +8,8 @@ namespace MatrixAlgebra
 
         public Matrix(T[,] elements)
         {
-            _elements = new T[elements.GetLength(0), elements.GetLength(1)];
-            elements.CopyTo(_elements, 0);
+            _elements = elements.Clone() as T[,] 
+                ?? new T[0, 0];
         }
 
         public T this[int i, int j]
@@ -156,6 +156,22 @@ namespace MatrixAlgebra
         public bool SameSize(Matrix<T> other)
         {
             return Width == other.Width && Height == other.Height;
+        }
+
+        public bool Equals(Matrix<T> other, T epsilon)
+        {
+            for (int i = 0; i < Width; i++)
+            {
+                for (int j = 0; j < Height; j++)
+                {
+                    if (!GenericMath.NearlyEquals(_elements[i, j], other[i, j], epsilon))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
     }
 }

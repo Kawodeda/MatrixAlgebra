@@ -20,6 +20,13 @@ namespace MatrixAlgebra
             return result;
         }
 
+        public static bool NearlyEquals<T>(T a, T b, T epsilon) where T : INumber<T>
+        {
+            T diff = T.Abs(a - b);
+            
+            return diff < epsilon;
+        }
+
         private static T GetPowerMonomial<T>(T x, int y) where T : INumber<T>
         {
             return int.IsNegative(y) 
