@@ -1,6 +1,4 @@
-using MatrixAlgebra;
-
-namespace MatrixAlgebraTests
+namespace MatrixAlgebra.Tests
 {
     public class MatrixTests
     {

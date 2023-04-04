@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatrixAlgebra", "MatrixAlgebra\MatrixAlgebra.csproj", "{A2D0B86D-FB6F-4DF8-902F-A840AA76F50A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatrixAlgebraTests", "MatrixAlgebraTests\MatrixAlgebraTests.csproj", "{29AAD1A0-F459-4DC8-A767-44B440B941A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatrixAlgebra.Tests", "MatrixAlgebraTests\MatrixAlgebra.Tests.csproj", "{29AAD1A0-F459-4DC8-A767-44B440B941A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
