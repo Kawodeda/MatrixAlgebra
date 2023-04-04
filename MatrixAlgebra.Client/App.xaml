@@ -1,9 +1,13 @@
 ﻿<Application x:Class="MatrixAlgebra.Client.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:MatrixAlgebra.Client"
-             StartupUri="MainWindow.xaml">
+             StartupUri="./Views/MainWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="Border" x:Key="container">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Padding" Value="10"/>
+        </Style>
     </Application.Resources>
 </Application>
