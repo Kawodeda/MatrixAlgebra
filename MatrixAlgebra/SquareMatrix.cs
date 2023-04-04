@@ -82,21 +82,25 @@ namespace MatrixAlgebra
 
         private SquareMatrix<T> AdjugateMatrix()
         {
-            SquareMatrix<T> transposed = Transpose();
             var result = new T[Size, Size];
             for (int i = 0; i < Size; i++)
             {
                 for (int j = 0; j < Size; j++)
                 {
-                    result[i, j] = GenericMath.Pow(-T.One, i + j) * transposed.Minor(i, j);
+                    result[i, j] = GenericMath.Pow(-T.One, i + j) * Minor(i, j);
                 }
             }
 
-            return new SquareMatrix<T>(result);
+            return new SquareMatrix<T>(result).Transpose();
         }
 
         private T Determinant()
         {
+            if (Size == 1)
+            {
+                return Matrix[0, 0];
+            }
+
             T result = T.AdditiveIdentity;
             for (int j = 0; j < Size; j++)
             {
@@ -113,17 +117,15 @@ namespace MatrixAlgebra
 
         private SquareMatrix<T> Submatrix(int i, int j)
         {
-            int iResult = 0;
-            int jResult = 0;
             var result = new T[Size - 1, Size - 1];
 
-            for (int iCurrent = 0; iCurrent < Size; iCurrent++)
+            for (int iCurrent = 0, iResult = 0; iCurrent < Size; iCurrent++)
             {
                 if (iCurrent == i)
                 {
                     continue;
                 }
-                for (int jCurrent = 0; jCurrent < Size; jCurrent++)
+                for (int jCurrent = 0, jResult = 0; jCurrent < Size; jCurrent++)
                 {
                     if (jCurrent == j)
                     {
@@ -131,9 +133,9 @@ namespace MatrixAlgebra
                     }
 
                     result[iResult, jResult] = Matrix[iCurrent, jCurrent];
-                    iResult++;
                     jResult++;
                 }
+                iResult++;
             }
 
             return new SquareMatrix<T>(result);
