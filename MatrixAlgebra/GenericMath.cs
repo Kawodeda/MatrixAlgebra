@@ -11,10 +11,11 @@ namespace MatrixAlgebra
                 return T.One;
             }
 
-            T result = GetPowerMonomial(x, y);
-            for (int i = 1; i <= y; i++)
+            T monomial = GetPowerMonomial(x, y);
+            T result = monomial;
+            for (int i = 1; i < y; i++)
             {
-                result *= result;
+                result *= monomial;
             }
 
             return result;
