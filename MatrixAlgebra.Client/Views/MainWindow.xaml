@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MatrixAlgebra.Client.Views"
-        xmlns:dataGrid2D="http://gu.se/DataGrid2D"
         xmlns:viewmodels="clr-namespace:MatrixAlgebra.Client.ViewModels"
         mc:Ignorable="d"
         Title="Matrix Algebra" Height="450" Width="1000" MinWidth="1000" MinHeight="450">
@@ -50,20 +49,26 @@
         </StackPanel>
 
         <local:MatrixViewer Grid.RowSpan="2"
-                            Title="A"
                             DataContext="{Binding MatrixAViewModel}">
         </local:MatrixViewer>
 
         <local:MatrixViewer Grid.Column="2"
                             Grid.RowSpan="2"
-                            Title="B"
-                            DataContext="{Binding MatrixBViewModel}">
+                            DataContext="{Binding MatrixBViewModel}"
+                            Visibility="Collapsed">
         </local:MatrixViewer>
 
         <local:MatrixViewer Grid.Column="1" 
                             Grid.Row="2"
-                            Title="Result"
                             DataContext="{Binding MatrixResultViewModel}">
         </local:MatrixViewer>
+
+        <local:Container Grid.Column="2"
+                         Height="auto"
+                         Title="Scalar"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Center">
+            <TextBox/>
+        </local:Container>
     </Grid>
 </Window>

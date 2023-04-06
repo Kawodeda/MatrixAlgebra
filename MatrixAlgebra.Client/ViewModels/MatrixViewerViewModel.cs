@@ -54,6 +54,8 @@ namespace MatrixAlgebra.Client.ViewModels
 
         public bool IsReadOnly { get; set; }
 
+        public string Title { get; set; }
+
         public RelayCommand AddColumnCommand { get; }
 
         public RelayCommand RemoveColumnCommand { get; }

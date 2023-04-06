@@ -49,12 +49,19 @@ namespace MatrixAlgebra.Client.ViewModels
             }
         }
 
-        public MatrixViewerViewModel MatrixAViewModel { get; } = new MatrixViewerViewModel();
+        public MatrixViewerViewModel MatrixAViewModel { get; } = new MatrixViewerViewModel()
+        {
+            Title = "A"
+        };
 
-        public MatrixViewerViewModel MatrixBViewModel { get; } = new MatrixViewerViewModel();
+        public MatrixViewerViewModel MatrixBViewModel { get; } = new MatrixViewerViewModel()
+        {
+            Title = "B"
+        };
 
         public MatrixViewerViewModel MatrixResultViewModel { get; } = new MatrixViewerViewModel()
         {
+            Title = "Result",
             IsReadOnly = true
         };
 

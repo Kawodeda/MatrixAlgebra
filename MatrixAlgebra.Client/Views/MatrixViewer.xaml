@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:MatrixAlgebra.Client.Views"
              xmlns:dataGrid2D="http://gu.se/DataGrid2D"
              xmlns:viewmodels="clr-namespace:MatrixAlgebra.Client.ViewModels"
              xmlns:converters="clr-namespace:MatrixAlgebra.Client.Views.Converters"
@@ -16,7 +17,7 @@
         <viewmodels:MatrixViewerViewModel/>
     </UserControl.DataContext>
     <Grid>
-        <Border Style="{StaticResource container}">
+        <local:Container>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -27,7 +28,7 @@
                            Width="Auto"
                            HorizontalAlignment="Left"
                            Padding="3 0"
-                           Text="{Binding ElementName=matrix, Path=Title}">
+                           Text="{Binding Title}">
                 </TextBlock>
                 <DataGrid HeadersVisibility="None"
                           dataGrid2D:ItemsSource.ColumnsSource="{Binding Matrix}"
@@ -93,6 +94,6 @@
                     </Button>
                 </StackPanel>
             </Grid>
-        </Border>
+        </local:Container>
     </Grid>
 </UserControl>
