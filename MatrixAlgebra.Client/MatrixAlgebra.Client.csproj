@@ -11,4 +11,8 @@
     <PackageReference Include="Gu.Wpf.DataGrid2D" Version="0.2.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MatrixAlgebra\MatrixAlgebra.csproj" />
+  </ItemGroup>
+
 </Project>

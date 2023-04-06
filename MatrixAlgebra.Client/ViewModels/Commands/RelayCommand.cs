@@ -10,7 +10,7 @@ namespace MatrixAlgebra.Client.ViewModels.Commands
 
         public event EventHandler? CanExecuteChanged;
 
-        public RelayCommand(Action<object?> execute, Func<object?, bool>? canExecute)
+        public RelayCommand(Action<object?> execute, Func<object?, bool>? canExecute = null)
         {
             _execute = execute;
             _canExecute = canExecute;
@@ -24,6 +24,11 @@ namespace MatrixAlgebra.Client.ViewModels.Commands
         public void Execute(object? parameter)
         {
             _execute(parameter);
+        }
+
+        public void NotifyCanExecuteChanged()
+        {
+            CanExecuteChanged?.Invoke(this, new EventArgs());
         }
     }
 }

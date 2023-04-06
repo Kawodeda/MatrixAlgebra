@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MatrixAlgebra.Client.Views"
         xmlns:dataGrid2D="http://gu.se/DataGrid2D"
+        xmlns:viewmodels="clr-namespace:MatrixAlgebra.Client.ViewModels"
         mc:Ignorable="d"
-        Title="Matrix Algebra" Height="450" Width="800" MinWidth="800" MinHeight="450">
+        Title="Matrix Algebra" Height="450" Width="1000" MinWidth="1000" MinHeight="450">
+    <Window.DataContext>
+        <viewmodels:MainViewModel/>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="45*"/>
@@ -22,7 +26,8 @@
         <Button Grid.Row="1" 
                 Grid.Column="1" 
                 Height="30"
-                Margin="10 0">
+                Margin="10 0"
+                Command="{Binding CalculateCommand}">
             Calculate
         </Button>
 
@@ -34,57 +39,27 @@
                       Margin="10 10 10 0"
                       Height="30" 
                       Width="auto"
-                      ItemsSource="{Binding Ops}">
+                      ItemsSource="{Binding Operations}"
+                      SelectedItem="{Binding SelectedOperation}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=Title}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
             </ComboBox>
         </StackPanel>
 
-        <Border Style="{StaticResource container}">
-            <Grid>
-                <TextBlock Margin="-5 -20 0 0"
-                           Background="White"
-                           Width="Auto"
-                           HorizontalAlignment="Left"
-                           Padding="3 0">
-                    A
-                </TextBlock>
-                <DataGrid>
+        <local:MatrixViewer Title="A"
+                            DataContext="{Binding MatrixAViewModel}">
+        </local:MatrixViewer>
 
-                </DataGrid>
-            </Grid>
-        </Border>
+        <local:MatrixViewer Grid.Column="2"
+                            Title="B">
+        </local:MatrixViewer>
 
-        <Border Style="{StaticResource container}"
-                Grid.Column="2">
-            <Grid>
-                <TextBlock Margin="-5 -20 0 0"
-                           Background="White"
-                           Width="Auto"
-                           HorizontalAlignment="Left"
-                           Padding="3 0">
-                    B
-                </TextBlock>
-                <DataGrid dataGrid2D:ItemsSource.RowsSource="{Binding Values}">
-
-                </DataGrid>
-            </Grid>
-        </Border>
-
-        <Border Style="{StaticResource container}"
-                Grid.Column="1"
-                Grid.Row="2">
-            <Grid>
-                <TextBlock Margin="-5 -20 0 0"
-                           Background="White"
-                           Width="Auto"
-                           HorizontalAlignment="Left"
-                           Padding="3 0">
-                    Result
-                </TextBlock>
-                <DataGrid HeadersVisibility="None"
-                          dataGrid2D:ItemsSource.RowsSource="{Binding Values}">
-                    
-                </DataGrid>
-            </Grid>
-        </Border>
+        <local:MatrixViewer Grid.Column="1" 
+                            Grid.Row="2"
+                            Title="Result">
+        </local:MatrixViewer>
     </Grid>
 </Window>
