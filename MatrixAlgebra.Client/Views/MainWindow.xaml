@@ -49,11 +49,13 @@
             </ComboBox>
         </StackPanel>
 
-        <local:MatrixViewer Title="A"
+        <local:MatrixViewer Grid.RowSpan="2"
+                            Title="A"
                             DataContext="{Binding MatrixAViewModel}">
         </local:MatrixViewer>
 
         <local:MatrixViewer Grid.Column="2"
+                            Grid.RowSpan="2"
                             Title="B"
                             DataContext="{Binding MatrixBViewModel}">
         </local:MatrixViewer>

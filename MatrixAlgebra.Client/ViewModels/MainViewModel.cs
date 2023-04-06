@@ -53,7 +53,10 @@ namespace MatrixAlgebra.Client.ViewModels
 
         public MatrixViewerViewModel MatrixBViewModel { get; } = new MatrixViewerViewModel();
 
-        public MatrixViewerViewModel MatrixResultViewModel { get; } = new MatrixViewerViewModel();
+        public MatrixViewerViewModel MatrixResultViewModel { get; } = new MatrixViewerViewModel()
+        {
+            IsReadOnly = true
+        };
 
         public RelayCommand CalculateCommand { get; }
 

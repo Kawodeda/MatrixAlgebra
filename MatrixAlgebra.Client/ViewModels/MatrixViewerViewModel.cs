@@ -52,6 +52,8 @@ namespace MatrixAlgebra.Client.ViewModels
             }
         }
 
+        public bool IsReadOnly { get; set; }
+
         public RelayCommand AddColumnCommand { get; }
 
         public RelayCommand RemoveColumnCommand { get; }
@@ -89,7 +91,7 @@ namespace MatrixAlgebra.Client.ViewModels
 
         private bool CanAddRow()
         {
-            return Rows < MaxRows;
+            return Rows < MaxRows && !IsReadOnly;
         }
 
         private void AddRow()
@@ -104,7 +106,7 @@ namespace MatrixAlgebra.Client.ViewModels
 
         private bool CanRemoveRow()
         {
-            return Rows > MinRows;
+            return Rows > MinRows && !IsReadOnly;
         }
 
         private void RemoveRow()
@@ -119,7 +121,7 @@ namespace MatrixAlgebra.Client.ViewModels
 
         private bool CanAddColumn()
         {
-            return Columns < MaxColumns;
+            return Columns < MaxColumns && !IsReadOnly;
         }
 
         private void AddColumn()
@@ -132,7 +134,7 @@ namespace MatrixAlgebra.Client.ViewModels
 
         private bool CanRemoveColumn()
         {
-            return Columns > MinColumns;
+            return Columns > MinColumns && !IsReadOnly;
         }
 
         private void RemoveColumn()
