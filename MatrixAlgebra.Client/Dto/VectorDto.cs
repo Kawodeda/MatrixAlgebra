@@ -2,11 +2,11 @@
 {
     public class VectorDto
     {
-        public float[] Elements { get; private set; }
-
         public VectorDto(float[] elements)
         {
             Elements = elements;
         }
+
+        public float[] Elements { get; }
     }
 }

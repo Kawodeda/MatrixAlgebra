@@ -2,13 +2,13 @@
 
 namespace MatrixAlgebra.Client.MatrixOperations
 {
-    public class MatrixAddOperation : BaseMatrixOperation
+    public class MatrixSubtractOperation : BaseMatrixOperation
     {
         public override string Title
         {
             get
             {
-                return "Add";
+                return "Subtract";
             }
         }
 
@@ -16,9 +16,9 @@ namespace MatrixAlgebra.Client.MatrixOperations
         {
             Matrix<float> matrixA = ToModel(context.MatrixA);
             Matrix<float> matrixB = ToModel(context.MatrixB);
-            Matrix<float> sum = matrixA.Add(matrixB);
+            Matrix<float> difference = matrixA.Subtract(matrixB);
 
-            return ToDto(sum);
+            return ToDto(difference);
         }
     }
 }

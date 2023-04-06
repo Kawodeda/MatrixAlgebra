@@ -69,7 +69,7 @@ namespace MatrixAlgebra
             }
 
             var row = new T[Width];
-            for (int i = 0; i < Height; i++)
+            for (int i = 0; i < Width; i++)
             {
                 row[i] = _elements[i, j];
             }
@@ -127,7 +127,7 @@ namespace MatrixAlgebra
                 throw new ArgumentException("Height of the other Matrix was not equal to Width");
             }
 
-            var product = new T[Width, Height];
+            var product = new T[other.Width, Height];
             for (int i = 0; i < other.Width; i++)
             {
                 for (int j = 0; j < Height; j++)

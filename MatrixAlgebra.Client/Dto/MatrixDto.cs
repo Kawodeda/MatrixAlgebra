@@ -2,11 +2,11 @@
 {
     public class MatrixDto
     {
-        public float[,] Elements { get; set; }
-
         public MatrixDto(float[,] elements)
         {
             Elements = elements;
         }
+
+        public float[,] Elements { get; }
     }
 }

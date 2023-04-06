@@ -9,7 +9,14 @@ namespace MatrixAlgebra.Client.ViewModels
     {
         private readonly IEnumerable<IMatrixOperation> _operations = new List<IMatrixOperation>()
         {
-            new MatrixAddOperation()
+            new MatrixAddOperation(),
+            new MatrixSubtractOperation(),
+            new MatrixScaleOperation(),
+            new MatrixTransposeOperation(),
+            new MatrixMultiplyByTransposedOperation(),
+            new MatrixSwapRowsOperation(),
+            new MatrixTransposeRowsOperation(),
+            new MatrixInverseOperation()
         };
         private readonly List<List<float>> _matrixA = new List<List<float>>();
 
@@ -54,7 +61,7 @@ namespace MatrixAlgebra.Client.ViewModels
         {
             MatrixDto matrixA = MatrixAViewModel.GetMatrix();
             MatrixDto matrixB = MatrixBViewModel.GetMatrix();
-            MatrixDto result = SelectedOperation!.Perform(new MatrixOperationContext(matrixA, matrixA, matrixB));
+            MatrixDto result = SelectedOperation!.Perform(new MatrixOperationContext(matrixA, matrixA, matrixB, 0, 0, 1, null));
 
             MatrixResultViewModel.SetMatrix(result);
         }

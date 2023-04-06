@@ -2,23 +2,22 @@
 
 namespace MatrixAlgebra.Client.MatrixOperations
 {
-    public class MatrixAddOperation : BaseMatrixOperation
+    public class MatrixInverseOperation : BaseMatrixOperation
     {
         public override string Title
         {
             get
             {
-                return "Add";
+                return "Inverse";
             }
         }
 
         public override MatrixDto Perform(IMatrixOperationContext context)
         {
-            Matrix<float> matrixA = ToModel(context.MatrixA);
-            Matrix<float> matrixB = ToModel(context.MatrixB);
-            Matrix<float> sum = matrixA.Add(matrixB);
+            var matrix = new SquareMatrix<float>(ToModel(context.Matrix));
+            SquareMatrix<float> inverse = matrix.Inverse();
 
-            return ToDto(sum);
+            return ToDto(inverse.Matrix);
         }
     }
 }

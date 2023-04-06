@@ -9,5 +9,13 @@ namespace MatrixAlgebra.Client.MatrixOperations
         MatrixDto MatrixA { get; }
 
         MatrixDto MatrixB { get; }
+
+        float Scalar { get; }
+
+        int Row1 { get; }
+
+        int Row2 { get; }
+
+        TranspositionVectorDto TranspositionVector { get; }
     }
 }

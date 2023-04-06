@@ -2,23 +2,22 @@
 
 namespace MatrixAlgebra.Client.MatrixOperations
 {
-    public class MatrixAddOperation : BaseMatrixOperation
+    public class MatrixMultiplyByTransposedOperation : BaseMatrixOperation
     {
         public override string Title
         {
             get
             {
-                return "Add";
+                return "Multiply by transposed matrix";
             }
         }
 
         public override MatrixDto Perform(IMatrixOperationContext context)
         {
-            Matrix<float> matrixA = ToModel(context.MatrixA);
-            Matrix<float> matrixB = ToModel(context.MatrixB);
-            Matrix<float> sum = matrixA.Add(matrixB);
+            Matrix<float> matrix = ToModel(context.Matrix);
+            Matrix<float> result = matrix.Multiply(matrix.Transpose());
 
-            return ToDto(sum);
+            return ToDto(result);
         }
     }
 }
