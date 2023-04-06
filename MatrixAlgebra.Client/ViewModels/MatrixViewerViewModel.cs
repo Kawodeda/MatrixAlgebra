@@ -1,9 +1,7 @@
 ﻿using MatrixAlgebra.Client.Dto;
 using MatrixAlgebra.Client.ViewModels.Commands;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Input;
 
 namespace MatrixAlgebra.Client.ViewModels
 {
@@ -18,8 +16,17 @@ namespace MatrixAlgebra.Client.ViewModels
         private readonly ObservableCollection<ObservableCollection<float>> _matrix = new ObservableCollection<ObservableCollection<float>>()
         {
             new ObservableCollection<float>() { 0, 0, 0 },
-            new ObservableCollection<float>() { 1, 2, 3 }
+            new ObservableCollection<float>() { 0, 0, 0 },
+            new ObservableCollection<float>() { 0, 0, 0 }
         };
+
+        public MatrixViewerViewModel()
+        {
+            AddColumnCommand = new RelayCommand(parameter => AddColumn(), parameter => CanAddColumn());
+            AddRowCommand = new RelayCommand(parameter => AddRow(), parameter => CanAddRow());
+            RemoveColumnCommand = new RelayCommand(parameter => RemoveColumn(), parameter => CanRemoveColumn());
+            RemoveRowCommand = new RelayCommand(parameter => RemoveRow(), parameter => CanRemoveRow());
+        }
 
         private int Columns
         {
@@ -53,14 +60,6 @@ namespace MatrixAlgebra.Client.ViewModels
 
         public RelayCommand RemoveRowCommand { get; }
 
-        public MatrixViewerViewModel()
-        {
-            AddColumnCommand = new RelayCommand(parameter => AddColumn(), parameter => CanAddColumn());
-            AddRowCommand = new RelayCommand(parameter => AddRow(), parameter => CanAddRow());
-            RemoveColumnCommand = new RelayCommand(parameter => RemoveColumn(), parameter => CanRemoveColumn());
-            RemoveRowCommand = new RelayCommand(parameter => RemoveRow(), parameter => CanRemoveRow());
-        }
-
         public void SetMatrix(MatrixDto matrix)
         {
             _matrix.Clear();
@@ -79,7 +78,7 @@ namespace MatrixAlgebra.Client.ViewModels
             var result = new float[Columns, Rows];
             for (int i = 0; i < Columns; i++)
             {
-                for (int j = 0; j < Columns; j++)
+                for (int j = 0; j < Rows; j++)
                 {
                     result[i, j] = _matrix[i][j];
                 }

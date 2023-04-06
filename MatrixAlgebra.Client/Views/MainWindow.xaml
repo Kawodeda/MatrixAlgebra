@@ -54,12 +54,14 @@
         </local:MatrixViewer>
 
         <local:MatrixViewer Grid.Column="2"
-                            Title="B">
+                            Title="B"
+                            DataContext="{Binding MatrixBViewModel}">
         </local:MatrixViewer>
 
         <local:MatrixViewer Grid.Column="1" 
                             Grid.Row="2"
-                            Title="Result">
+                            Title="Result"
+                            DataContext="{Binding MatrixResultViewModel}">
         </local:MatrixViewer>
     </Grid>
 </Window>

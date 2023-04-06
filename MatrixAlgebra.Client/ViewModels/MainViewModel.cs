@@ -2,7 +2,6 @@
 using MatrixAlgebra.Client.MatrixOperations;
 using MatrixAlgebra.Client.ViewModels.Commands;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MatrixAlgebra.Client.ViewModels
 {
@@ -20,8 +19,6 @@ namespace MatrixAlgebra.Client.ViewModels
         {
             _matrixA.Add(new List<float>() { 0, 0, 0 });
             CalculateCommand = new RelayCommand(Calculate, CanCalculate);
-            MatrixAViewModel = new MatrixViewerViewModel();
-            MatrixAViewModel.SetMatrix(new MatrixDto(new float[,] { { 11 } }));
         }
 
         public IEnumerable<IMatrixOperation> Operations
@@ -45,13 +42,21 @@ namespace MatrixAlgebra.Client.ViewModels
             }
         }
 
-        public MatrixViewerViewModel MatrixAViewModel { get; }
+        public MatrixViewerViewModel MatrixAViewModel { get; } = new MatrixViewerViewModel();
+
+        public MatrixViewerViewModel MatrixBViewModel { get; } = new MatrixViewerViewModel();
+
+        public MatrixViewerViewModel MatrixResultViewModel { get; } = new MatrixViewerViewModel();
 
         public RelayCommand CalculateCommand { get; }
 
         private void Calculate(object? parameter)
         {
+            MatrixDto matrixA = MatrixAViewModel.GetMatrix();
+            MatrixDto matrixB = MatrixBViewModel.GetMatrix();
+            MatrixDto result = SelectedOperation!.Perform(new MatrixOperationContext(matrixA, matrixA, matrixB));
 
+            MatrixResultViewModel.SetMatrix(result);
         }
 
         private bool CanCalculate(object? parameter)

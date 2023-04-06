@@ -2,8 +2,12 @@
 
 namespace MatrixAlgebra.Client.MatrixOperations
 {
-    public interface IMatrixUnaryOperationContext
+    public interface IMatrixOperationContext
     {
         MatrixDto Matrix { get; }
+
+        MatrixDto MatrixA { get; }
+
+        MatrixDto MatrixB { get; }
     }
 }

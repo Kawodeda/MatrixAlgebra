@@ -12,7 +12,7 @@ namespace MatrixAlgebra.Client.MatrixOperations
             }
         }
 
-        public MatrixDto Perform(IMatrixBinaryOperationContext context)
+        public MatrixDto Perform(IMatrixOperationContext context)
         {
             Matrix<float> matrixA = ToModel(context.MatrixA);
             Matrix<float> matrixB = ToModel(context.MatrixB);
