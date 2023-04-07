@@ -16,6 +16,13 @@ namespace MatrixAlgebra.Client.MatrixOperations
 
         public override IMainViewState ViewState { get; } = new UnaryMatrixOperationState();
 
+        public override bool CanPerform(IMatrixOperationContext context)
+        {
+            Matrix<float> matrix = ToModel(context.Matrix);
+
+            return matrix.Width == matrix.Height;
+        }
+
         public override MatrixDto Perform(IMatrixOperationContext context)
         {
             var matrix = new SquareMatrix<float>(ToModel(context.Matrix));

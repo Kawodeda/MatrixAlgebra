@@ -3,22 +3,28 @@ using MatrixAlgebra.Client.ViewModels.Commands;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Numerics;
 
 namespace MatrixAlgebra.Client.ViewModels
 {
-    public class MatrixViewerViewModel : BaseViewModel
+    public class MatrixViewerViewModel : MatrixViewerViewModel<float>
     {
-        private const float DefaultElement = 0f;
+
+    }
+
+    public class MatrixViewerViewModel<T> : BaseViewModel where T : INumber<T>
+    {
         private const int MinRows = 1;
         private const int MaxRows = 10;
         private const int MinColumns = 1;
         private const int MaxColumns = 10;
 
-        private readonly ObservableCollection<ObservableCollection<float>> _matrix = new ObservableCollection<ObservableCollection<float>>()
+        private readonly T DefaultElement = T.Zero;
+        private readonly ObservableCollection<ObservableCollection<T>> _matrix = new ObservableCollection<ObservableCollection<T>>()
         {
-            new ObservableCollection<float>() { 0, 0, 0 },
-            new ObservableCollection<float>() { 0, 0, 0 },
-            new ObservableCollection<float>() { 0, 0, 0 }
+            new ObservableCollection<T>() { T.Zero, T.Zero, T.Zero },
+            new ObservableCollection<T>() { T.Zero, T.Zero, T.Zero },
+            new ObservableCollection<T>() { T.Zero, T.Zero, T.Zero }
         };
 
         private string _title = "";
@@ -47,7 +53,7 @@ namespace MatrixAlgebra.Client.ViewModels
             }
         }
 
-        public ObservableCollection<ObservableCollection<float>> Matrix
+        public ObservableCollection<ObservableCollection<T>> Matrix
         {
             get
             {
@@ -90,12 +96,14 @@ namespace MatrixAlgebra.Client.ViewModels
 
         public event EventHandler<int>? RowsChanged;
 
-        public void SetMatrix(MatrixDto matrix)
+        public event EventHandler<int>? ColumnsChanged;
+
+        public void SetMatrix(MatrixDto<T> matrix)
         {
             _matrix.Clear();
             for (int i = 0; i < matrix.Elements.GetLength(0); i++)
             {
-                _matrix.Add(new ObservableCollection<float>());
+                _matrix.Add(new ObservableCollection<T>());
                 for (int j = 0; j < matrix.Elements.GetLength(1); j++)
                 {
                     _matrix[i].Add(matrix.Elements[i, j]);
@@ -103,11 +111,12 @@ namespace MatrixAlgebra.Client.ViewModels
             }
 
             RowsChanged?.Invoke(this, Rows);
+            ColumnsChanged?.Invoke(this, Columns);
         }
 
-        public MatrixDto GetMatrix()
+        public MatrixDto<T> GetMatrix()
         {
-            var result = new float[Columns, Rows];
+            var result = new T[Columns, Rows];
             for (int i = 0; i < Columns; i++)
             {
                 for (int j = 0; j < Rows; j++)
@@ -116,7 +125,7 @@ namespace MatrixAlgebra.Client.ViewModels
                 }
             }
 
-            return new MatrixDto(result);
+            return new MatrixDto<T>(result);
         }
 
         private bool CanAddRow()
@@ -157,7 +166,7 @@ namespace MatrixAlgebra.Client.ViewModels
         private void AddColumn()
         {
             var column = Enumerable.Repeat(DefaultElement, Rows);
-            _matrix.Add(new ObservableCollection<float>(column));
+            _matrix.Add(new ObservableCollection<T>(column));
 
             OnColumnsChanged();
         }
@@ -178,6 +187,7 @@ namespace MatrixAlgebra.Client.ViewModels
         {
             AddColumnCommand.NotifyCanExecuteChanged();
             RemoveColumnCommand.NotifyCanExecuteChanged();
+            ColumnsChanged?.Invoke(this, Columns);
         }
 
         private void OnRowsChanged()

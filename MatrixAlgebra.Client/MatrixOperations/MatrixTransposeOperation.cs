@@ -16,6 +16,11 @@ namespace MatrixAlgebra.Client.MatrixOperations
 
         public override IMainViewState ViewState { get; } = new UnaryMatrixOperationState();
 
+        public override bool CanPerform(IMatrixOperationContext context)
+        {
+            return true;
+        }
+
         public override MatrixDto Perform(IMatrixOperationContext context)
         {
             Matrix<float> matrix = ToModel(context.Matrix);

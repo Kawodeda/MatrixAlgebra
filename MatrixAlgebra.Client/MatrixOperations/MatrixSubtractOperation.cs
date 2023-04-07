@@ -16,6 +16,15 @@ namespace MatrixAlgebra.Client.MatrixOperations
 
         public override IMainViewState ViewState { get; } = new BinaryMatrixOperationState();
 
+        public override bool CanPerform(IMatrixOperationContext context)
+        {
+            Matrix<float> matrixA = ToModel(context.MatrixA);
+            Matrix<float> matrixB = ToModel(context.MatrixB);
+
+            return matrixA.Width == matrixB.Width
+                && matrixA.Height == matrixB.Height;
+        }
+
         public override MatrixDto Perform(IMatrixOperationContext context)
         {
             Matrix<float> matrixA = ToModel(context.MatrixA);

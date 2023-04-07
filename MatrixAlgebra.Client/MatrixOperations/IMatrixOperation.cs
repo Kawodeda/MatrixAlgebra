@@ -9,6 +9,8 @@ namespace MatrixAlgebra.Client.MatrixOperations
 
         IMainViewState ViewState { get; }
 
+        bool CanPerform(IMatrixOperationContext context);
+
         MatrixDto Perform(IMatrixOperationContext context);
     }
 }

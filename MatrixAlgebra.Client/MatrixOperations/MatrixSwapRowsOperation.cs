@@ -16,6 +16,12 @@ namespace MatrixAlgebra.Client.MatrixOperations
 
         public override IMainViewState ViewState { get; } = new SwapRowsOperationState();
 
+        public override bool CanPerform(IMatrixOperationContext context)
+        {
+            return IsRowIndex(context.Row1, context.Matrix)
+                && IsRowIndex(context.Row2, context.Matrix);
+        }
+
         public override MatrixDto Perform(IMatrixOperationContext context)
         {
             Matrix<float> matrix = ToModel(context.Matrix);
@@ -23,6 +29,13 @@ namespace MatrixAlgebra.Client.MatrixOperations
             Matrix<float> result = MatrixMath.TransposeRows(matrix, swapTwoRows);
 
             return ToDto(result);
+        }
+
+        private bool IsRowIndex(int index, MatrixDto matrixDto)
+        {
+            Matrix<float> matrix = ToModel(matrixDto);
+
+            return index >= 0 && index < matrix.Height;
         }
 
         private Vector<int> GetTranspositionVector(Matrix<float> matrix, int row1, int row2)

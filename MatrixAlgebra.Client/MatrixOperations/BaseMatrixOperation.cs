@@ -9,6 +9,8 @@ namespace MatrixAlgebra.Client.MatrixOperations
 
         public abstract IMainViewState ViewState { get; }
 
+        public abstract bool CanPerform(IMatrixOperationContext context);
+
         public abstract MatrixDto Perform(IMatrixOperationContext context);
 
         protected MatrixDto ToDto(Matrix<float> matrix)

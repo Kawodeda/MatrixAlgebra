@@ -79,7 +79,7 @@
                          VerticalAlignment="Center"
                          HorizontalAlignment="Center"
                          Visibility="{Binding SelectedOperation.ViewState.ShowScalar, Converter={StaticResource visibilityConverter}, FallbackValue=false}">
-            <TextBox/>
+            <TextBox Text="{Binding Scalar}"/>
         </local:Container>
 
         <Grid Grid.Column="2"
