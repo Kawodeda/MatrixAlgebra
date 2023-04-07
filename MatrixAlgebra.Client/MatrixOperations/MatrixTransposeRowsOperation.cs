@@ -1,4 +1,6 @@
 ﻿using MatrixAlgebra.Client.Dto;
+using MatrixAlgebra.Client.MatrixOperations.ViewStates;
+using MatrixAlgebra.Client.ViewModels;
 
 namespace MatrixAlgebra.Client.MatrixOperations
 {
@@ -11,6 +13,8 @@ namespace MatrixAlgebra.Client.MatrixOperations
                 return "Transpose rows";
             }
         }
+
+        public override IMainViewState ViewState { get; } = new MatrixTransposeRowsOperationState();
 
         public override MatrixDto Perform(IMatrixOperationContext context)
         {

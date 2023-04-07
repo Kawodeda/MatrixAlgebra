@@ -1,10 +1,13 @@
 ﻿using MatrixAlgebra.Client.Dto;
+using MatrixAlgebra.Client.ViewModels;
 
 namespace MatrixAlgebra.Client.MatrixOperations
 {
     public abstract class BaseMatrixOperation : IMatrixOperation
     {
         public abstract string Title { get; }
+
+        public abstract IMainViewState ViewState { get; }
 
         public abstract MatrixDto Perform(IMatrixOperationContext context);
 

@@ -5,14 +5,14 @@ using System.Windows.Data;
 
 namespace MatrixAlgebra.Client.Views.Converters
 {
-    [ValueConversion(typeof(bool), typeof(Visibility))]
-    public class IsReadOnlyVisibilityConverter : IValueConverter
+    [ValueConversion(typeof(bool?), typeof(Visibility))]
+    public class VisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool? isReadOnly = value as bool?;
-
-            return isReadOnly == true ? Visibility.Collapsed : Visibility.Visible;
+            return value as bool? == true 
+                ? Visibility.Visible 
+                : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

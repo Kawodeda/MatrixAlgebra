@@ -5,8 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MatrixAlgebra.Client.Views"
         xmlns:viewmodels="clr-namespace:MatrixAlgebra.Client.ViewModels"
+        xmlns:converters="clr-namespace:MatrixAlgebra.Client.Views.Converters"
         mc:Ignorable="d"
-        Title="Matrix Algebra" Height="450" Width="1000" MinWidth="1000" MinHeight="450">
+        Title="Matrix Algebra" 
+        Height="600" 
+        Width="1000" 
+        MinWidth="1000" 
+        MinHeight="450"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <converters:VisibilityConverter x:Key="visibilityConverter"/>
+    </Window.Resources>
     <Window.DataContext>
         <viewmodels:MainViewModel/>
     </Window.DataContext>
@@ -52,11 +61,12 @@
                             DataContext="{Binding MatrixAViewModel}">
         </local:MatrixViewer>
 
-        <local:MatrixViewer Grid.Column="2"
-                            Grid.RowSpan="2"
-                            DataContext="{Binding MatrixBViewModel}"
-                            Visibility="Collapsed">
-        </local:MatrixViewer>
+        <Grid Grid.Column="2"
+              Grid.RowSpan="2"
+              Visibility="{Binding SelectedOperation.ViewState.ShowMatrixB, Converter={StaticResource visibilityConverter}, FallbackValue=false}">
+            <local:MatrixViewer DataContext="{Binding MatrixBViewModel}">
+            </local:MatrixViewer>
+        </Grid>
 
         <local:MatrixViewer Grid.Column="1" 
                             Grid.Row="2"
@@ -67,8 +77,40 @@
                          Height="auto"
                          Title="Scalar"
                          VerticalAlignment="Center"
-                         HorizontalAlignment="Center">
+                         HorizontalAlignment="Center"
+                         Visibility="{Binding SelectedOperation.ViewState.ShowScalar, Converter={StaticResource visibilityConverter}, FallbackValue=false}">
             <TextBox/>
+        </local:Container>
+
+        <Grid Grid.Column="2"
+              Visibility="{Binding SelectedOperation.ViewState.ShowTranspositionVector, Converter={StaticResource visibilityConverter}, FallbackValue=false}">
+            <local:MatrixViewer 
+                            DataContext="{Binding TranspositionVectorViewModel}"
+                            MaxWidth="150">
+            </local:MatrixViewer>
+        </Grid>
+
+        <local:Container Grid.Column="2"
+                         Title="Rows to swap indexes"
+                         Height="auto"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Center"
+                         Visibility="{Binding SelectedOperation.ViewState.ShowSwapRows, Converter={StaticResource visibilityConverter}}">
+            <StackPanel Orientation="Horizontal"
+                        Width="auto"
+                        Height="24"
+                        HorizontalAlignment="Center">
+                <TextBox MinWidth="24"
+                         Margin="0"
+                         HorizontalContentAlignment="Center"
+                         VerticalContentAlignment="Center"
+                         Text="{Binding Row1Index}"/>
+                <TextBox MinWidth="24"
+                         Margin="10 0 0 0"
+                         HorizontalContentAlignment="Center"
+                         VerticalContentAlignment="Center"
+                         Text="{Binding Row2Index}"/>
+            </StackPanel>
         </local:Container>
     </Grid>
 </Window>

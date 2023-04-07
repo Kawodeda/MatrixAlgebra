@@ -1,5 +1,6 @@
 ﻿using MatrixAlgebra.Client.Dto;
 using MatrixAlgebra.Client.ViewModels.Commands;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -20,6 +21,8 @@ namespace MatrixAlgebra.Client.ViewModels
             new ObservableCollection<float>() { 0, 0, 0 }
         };
 
+        private string _title = "";
+
         public MatrixViewerViewModel()
         {
             AddColumnCommand = new RelayCommand(parameter => AddColumn(), parameter => CanAddColumn());
@@ -28,7 +31,7 @@ namespace MatrixAlgebra.Client.ViewModels
             RemoveRowCommand = new RelayCommand(parameter => RemoveRow(), parameter => CanRemoveRow());
         }
 
-        private int Columns
+        public int Columns
         {
             get
             {
@@ -36,7 +39,7 @@ namespace MatrixAlgebra.Client.ViewModels
             }
         }
 
-        private int Rows
+        public int Rows
         {
             get
             {
@@ -54,7 +57,20 @@ namespace MatrixAlgebra.Client.ViewModels
 
         public bool IsReadOnly { get; set; }
 
-        public string Title { get; set; }
+        public bool AllowChangeSize { get; set; } = true;
+
+        public string Title 
+        {
+            get
+            {
+                return _title;
+            }
+            set
+            {
+                _title = value;
+                NotifyPropertyChanged(nameof(Title));
+            }
+        }
 
         public RelayCommand AddColumnCommand { get; }
 
@@ -63,6 +79,16 @@ namespace MatrixAlgebra.Client.ViewModels
         public RelayCommand AddRowCommand { get; }
 
         public RelayCommand RemoveRowCommand { get; }
+
+        public bool ShowChangeSizeButtons
+        {
+            get
+            {
+                return AllowChangeSize && !IsReadOnly;
+            }
+        }
+
+        public event EventHandler<int>? RowsChanged;
 
         public void SetMatrix(MatrixDto matrix)
         {
@@ -75,6 +101,8 @@ namespace MatrixAlgebra.Client.ViewModels
                     _matrix[i].Add(matrix.Elements[i, j]);
                 }
             }
+
+            RowsChanged?.Invoke(this, Rows);
         }
 
         public MatrixDto GetMatrix()
@@ -156,6 +184,7 @@ namespace MatrixAlgebra.Client.ViewModels
         {
             AddRowCommand.NotifyCanExecuteChanged();
             RemoveRowCommand.NotifyCanExecuteChanged();
+            RowsChanged?.Invoke(this, Rows);
         }
     }
 }
