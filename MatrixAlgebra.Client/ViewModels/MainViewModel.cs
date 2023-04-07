@@ -24,6 +24,8 @@ namespace MatrixAlgebra.Client.ViewModels
         private IMatrixOperation _selectedOperation = new MatrixNoneOperation();
         private int _row1Index;
         private int _row2Index;
+        private bool _isDiagramByColumnEnabled = true;
+        private bool _isDiagramByRowEnabled;
 
         public MainViewModel()
         {
@@ -78,6 +80,32 @@ namespace MatrixAlgebra.Client.ViewModels
             Title = "Result",
             IsReadOnly = true
         };
+
+        public bool IsDiagramByColumnEnabled 
+        { 
+            get
+            {
+                return _isDiagramByColumnEnabled;
+            }
+            set
+            {
+                _isDiagramByColumnEnabled = value;
+                NotifyPropertyChanged(nameof(IsDiagramByColumnEnabled));
+            }
+        }
+
+        public bool IsDiagramByRowEnabled
+        {
+            get
+            {
+                return _isDiagramByRowEnabled;
+            }
+            set
+            {
+                _isDiagramByRowEnabled = value;
+                NotifyPropertyChanged(nameof(IsDiagramByRowEnabled));
+            }
+        }
 
         public float Scalar { get; set; }
 
