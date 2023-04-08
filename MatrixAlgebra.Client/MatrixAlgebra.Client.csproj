@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Gu.Wpf.DataGrid2D" Version="0.2.4" />
+    <PackageReference Include="Syncfusion.SfChart.WPF" Version="21.1.38" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MatrixAlgebra\MatrixAlgebra.csproj" />
+  </ItemGroup>
+
+</Project>

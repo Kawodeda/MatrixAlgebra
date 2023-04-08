@@ -1,0 +1,167 @@
+﻿<Window x:Class="MatrixAlgebra.Client.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MatrixAlgebra.Client.Views"
+        xmlns:viewmodels="clr-namespace:MatrixAlgebra.Client.ViewModels"
+        xmlns:converters="clr-namespace:MatrixAlgebra.Client.Views.Converters"
+        mc:Ignorable="d"
+        Title="Matrix Algebra" 
+        Height="600" 
+        Width="1000" 
+        MinWidth="1000" 
+        MinHeight="450"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <converters:VisibilityConverter x:Key="visibilityConverter"/>
+    </Window.Resources>
+    <Window.DataContext>
+        <viewmodels:MainViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Vertical"
+                    Grid.Column="1">
+            <local:Container Grid.Column="1"
+                         Title="Operation"
+                         VerticalAlignment="Top">
+                <StackPanel Grid.Column="1" 
+                        VerticalAlignment="Center">
+                    <ComboBox Text="Select operation:"
+                      Margin="0"
+                      Height="30" 
+                      Width="auto"
+                      ItemsSource="{Binding Operations}"
+                      SelectedItem="{Binding SelectedOperation}"
+                              HorizontalContentAlignment="Center"
+                              VerticalContentAlignment="Center">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=Title}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           TextAlignment="Center"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Button Height="30"
+                        Margin="0 10 0 0"
+                        Command="{Binding CalculateCommand}">
+                        Calculate
+                    </Button>
+                </StackPanel>
+            </local:Container>
+
+            <local:Container Title="Matrix diagram">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <RadioButton Grid.Column="0"
+                             Content="By column:"
+                             GroupName="diagram"
+                                     VerticalAlignment="Center"
+                                 IsChecked="{Binding IsDiagramByColumnEnabled}"/>
+                    <TextBox Grid.Column="1"
+                            MinWidth="24"
+                            Height="24"
+                            Margin="10 0 10 0"
+                             IsEnabled="{Binding IsDiagramByColumnEnabled}"
+                             MaxWidth="60"
+                             Text="{Binding DiagramColumn}"/>
+
+                    <RadioButton Grid.Row="1"
+                                     Content="By row:"
+                                     GroupName="diagram"
+                                     Margin="0 10 0 0"
+                                     VerticalAlignment="Center"
+                                 IsChecked="{Binding IsDiagramByRowEnabled}"/>
+                    <TextBox Grid.Row="1"
+                                 Grid.Column="1"
+                                 MinWidth="24"
+                                 Height="24"
+                                 Margin="10 10 10 0"
+                             MaxWidth="60"
+                             IsEnabled="{Binding IsDiagramByRowEnabled}"
+                             Text="{Binding DiagramRow}"/>
+
+                    <Button Grid.Column="2"
+                                Grid.RowSpan="2"
+                                Margin="0 0 0 0"
+                                Content="Show diagram"
+                            Command="{Binding ShowDiagramCommand}"/>
+                </Grid>
+            </local:Container>
+        </StackPanel>
+
+        <local:MatrixViewer DataContext="{Binding MatrixAViewModel}">
+        </local:MatrixViewer>
+
+        <Grid Grid.Column="2"
+              Visibility="{Binding SelectedOperation.ViewState.ShowMatrixB, Converter={StaticResource visibilityConverter}, FallbackValue=false}">
+            <local:MatrixViewer DataContext="{Binding MatrixBViewModel}">
+            </local:MatrixViewer>
+        </Grid>
+
+        <local:MatrixViewer Grid.Column="1" 
+                            Grid.Row="1"
+                            DataContext="{Binding MatrixResultViewModel}">
+        </local:MatrixViewer>
+
+        <local:Container Grid.Column="2"
+                         Height="auto"
+                         Title="Scalar"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Center"
+                         Visibility="{Binding SelectedOperation.ViewState.ShowScalar, Converter={StaticResource visibilityConverter}, FallbackValue=false}">
+            <TextBox Text="{Binding Scalar}"/>
+        </local:Container>
+
+        <Grid Grid.Column="2"
+              Visibility="{Binding SelectedOperation.ViewState.ShowTranspositionVector, Converter={StaticResource visibilityConverter}, FallbackValue=false}">
+            <local:MatrixViewer 
+                            DataContext="{Binding TranspositionVectorViewModel}"
+                            MaxWidth="150">
+            </local:MatrixViewer>
+        </Grid>
+
+        <local:Container Grid.Column="2"
+                         Title="Rows to swap indexes"
+                         Height="auto"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Center"
+                         Visibility="{Binding SelectedOperation.ViewState.ShowSwapRows, Converter={StaticResource visibilityConverter}}">
+            <StackPanel Orientation="Horizontal"
+                        Width="auto"
+                        Height="24"
+                        HorizontalAlignment="Center">
+                <TextBox MinWidth="24"
+                         Margin="0"
+                         HorizontalContentAlignment="Center"
+                         VerticalContentAlignment="Center"
+                         Text="{Binding Row1Index}"/>
+                <TextBox MinWidth="24"
+                         Margin="10 0 0 0"
+                         HorizontalContentAlignment="Center"
+                         VerticalContentAlignment="Center"
+                         Text="{Binding Row2Index}"/>
+            </StackPanel>
+        </local:Container>
+    </Grid>
+</Window>
