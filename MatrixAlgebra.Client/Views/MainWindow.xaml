@@ -84,7 +84,9 @@
                             Margin="10 0 10 0"
                              IsEnabled="{Binding IsDiagramByColumnEnabled}"
                              MaxWidth="60"
-                             Text="{Binding DiagramColumn}"/>
+                             Text="{Binding DiagramColumn}"
+                             HorizontalContentAlignment="Center"
+                             VerticalContentAlignment="Center"/>
 
                     <RadioButton Grid.Row="1"
                                      Content="By row:"
@@ -99,7 +101,9 @@
                                  Margin="10 10 10 0"
                              MaxWidth="60"
                              IsEnabled="{Binding IsDiagramByRowEnabled}"
-                             Text="{Binding DiagramRow}"/>
+                             Text="{Binding DiagramRow}"
+                             HorizontalContentAlignment="Center"
+                             VerticalContentAlignment="Center"/>
 
                     <Button Grid.Column="2"
                                 Grid.RowSpan="2"

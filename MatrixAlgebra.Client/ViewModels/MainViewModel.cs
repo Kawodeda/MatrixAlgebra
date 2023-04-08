@@ -41,7 +41,7 @@ namespace MatrixAlgebra.Client.ViewModels
             MatrixBViewModel.RowsChanged += OnMatrixBRowsChanged;
             MatrixBViewModel.ColumnsChanged += OnMatrixBColumnsChanged;
             UpdateTranspositionVector(MatrixAViewModel.Rows);
-            MatrixAViewModel.Title = SelectedOperation.ViewState.MatrixATitle;
+            UpdateMatrixATitle();
             TranspositionVectorViewModel.Matrix.Single().CollectionChanged += OnTranspositionVectorChanged;
         }
 
@@ -65,6 +65,7 @@ namespace MatrixAlgebra.Client.ViewModels
                 CalculateCommand.NotifyCanExecuteChanged();
 
                 NotifyPropertyChanged(nameof(SelectedOperation));
+                UpdateMatrixATitle();
             }
         }
 
@@ -270,6 +271,11 @@ namespace MatrixAlgebra.Client.ViewModels
         {
             TranspositionVectorViewModel.SetMatrix(new MatrixDto<int>(Enumerable.Range(0, rows).ToArray()));
             TranspositionVectorViewModel.Matrix.Single().CollectionChanged += OnTranspositionVectorChanged;
+        }
+
+        private void UpdateMatrixATitle()
+        {
+            MatrixAViewModel.Title = SelectedOperation.ViewState.MatrixATitle;
         }
     }
 }
