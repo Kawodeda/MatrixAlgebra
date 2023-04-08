@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Gu.Wpf.DataGrid2D" Version="0.2.4" />
+    <PackageReference Include="Syncfusion.SfChart.WPF" Version="21.1.38" />
   </ItemGroup>
 
   <ItemGroup>

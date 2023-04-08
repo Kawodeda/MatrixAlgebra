@@ -1,9 +1,11 @@
-﻿using MatrixAlgebra.Client.Dto;
-using MatrixAlgebra.Client.MatrixOperations;
-using MatrixAlgebra.Client.ViewModels.Commands;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using MatrixAlgebra.Client.Dto;
+using MatrixAlgebra.Client.MatrixOperations;
+using MatrixAlgebra.Client.ViewModels.Commands;
+using MatrixAlgebra.Client.Views;
 
 namespace MatrixAlgebra.Client.ViewModels
 {
@@ -26,10 +28,14 @@ namespace MatrixAlgebra.Client.ViewModels
         private int _row2Index;
         private bool _isDiagramByColumnEnabled = true;
         private bool _isDiagramByRowEnabled;
+        private int _diagramColumn;
+        private int _diagramRow;
 
         public MainViewModel()
         {
             CalculateCommand = new RelayCommand(Calculate, CanCalculate);
+            ShowDiagramCommand = new RelayCommand(ShowDiagram, CanShowDiagram);
+
             MatrixAViewModel.RowsChanged += OnMatrixARowsChanged;
             MatrixAViewModel.ColumnsChanged += OnMatrixAColumnsChanged;
             MatrixBViewModel.RowsChanged += OnMatrixBRowsChanged;
@@ -91,6 +97,7 @@ namespace MatrixAlgebra.Client.ViewModels
             {
                 _isDiagramByColumnEnabled = value;
                 NotifyPropertyChanged(nameof(IsDiagramByColumnEnabled));
+                ShowDiagramCommand.NotifyCanExecuteChanged();
             }
         }
 
@@ -104,6 +111,33 @@ namespace MatrixAlgebra.Client.ViewModels
             {
                 _isDiagramByRowEnabled = value;
                 NotifyPropertyChanged(nameof(IsDiagramByRowEnabled));
+                ShowDiagramCommand.NotifyCanExecuteChanged();
+            }
+        }
+
+        public int DiagramColumn
+        {
+            get
+            {
+                return _diagramColumn;
+            }
+            set
+            {
+                _diagramColumn = value;
+                ShowDiagramCommand.NotifyCanExecuteChanged();
+            }
+        }
+
+        public int DiagramRow
+        {
+            get
+            {
+                return _diagramRow;
+            }
+            set
+            {
+                _diagramRow = value;
+                ShowDiagramCommand.NotifyCanExecuteChanged();
             }
         }
 
@@ -137,6 +171,8 @@ namespace MatrixAlgebra.Client.ViewModels
 
         public RelayCommand CalculateCommand { get; }
 
+        public RelayCommand ShowDiagramCommand { get; }
+
         private IMatrixOperationContext MatrixOperationContext
         {
             get
@@ -169,15 +205,50 @@ namespace MatrixAlgebra.Client.ViewModels
             return SelectedOperation.CanPerform(MatrixOperationContext);
         }
 
+        private void ShowDiagram(object? parameter)
+        {
+            new DiagramWindow(GetDiagramContent()).Show();
+        }
+
+        private bool CanShowDiagram(object? parameter)
+        {
+            if (IsDiagramByColumnEnabled)
+            {
+                return DiagramColumn >= 0 && DiagramColumn < MatrixAViewModel.Columns;
+            }
+            if (IsDiagramByRowEnabled)
+            {
+                return DiagramRow >= 0 && DiagramRow < MatrixAViewModel.Rows;
+            }
+
+            return false;
+        }
+
+        private float[] GetDiagramContent()
+        {
+            if (IsDiagramByColumnEnabled)
+            {
+                return MatrixAViewModel.GetColumn(DiagramColumn);
+            }
+            if (IsDiagramByRowEnabled)
+            {
+                return MatrixAViewModel.GetRow(DiagramRow);
+            }
+
+            throw new InvalidOperationException();
+        }
+
         private void OnMatrixARowsChanged(object? sender, int rows)
         {
             UpdateTranspositionVector(rows);
             CalculateCommand.NotifyCanExecuteChanged();
+            ShowDiagramCommand.NotifyCanExecuteChanged();
         }
 
         private void OnMatrixAColumnsChanged(object? sender, int columns)
         {
             CalculateCommand.NotifyCanExecuteChanged();
+            ShowDiagramCommand.NotifyCanExecuteChanged();
         }
 
         private void OnMatrixBRowsChanged(object? sender, int rows)

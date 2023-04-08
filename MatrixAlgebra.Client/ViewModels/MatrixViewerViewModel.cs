@@ -128,6 +128,22 @@ namespace MatrixAlgebra.Client.ViewModels
             return new MatrixDto<T>(result);
         }
 
+        public T[] GetColumn(int columnIndex)
+        {
+            return Matrix[columnIndex].ToArray();
+        }
+
+        public T[] GetRow(int rowIndex)
+        {
+            var result = new T[Columns];
+            for (int i = 0; i < Rows; i++)
+            {
+                result[i] = Matrix[i][rowIndex];
+            }
+
+            return result;
+        }
+
         private bool CanAddRow()
         {
             return Rows < MaxRows && !IsReadOnly;

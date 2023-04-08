@@ -42,10 +42,15 @@
                       Height="30" 
                       Width="auto"
                       ItemsSource="{Binding Operations}"
-                      SelectedItem="{Binding SelectedOperation}">
+                      SelectedItem="{Binding SelectedOperation}"
+                              HorizontalContentAlignment="Center"
+                              VerticalContentAlignment="Center">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Path=Title}"/>
+                                <TextBlock Text="{Binding Path=Title}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           TextAlignment="Center"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
@@ -78,7 +83,8 @@
                             Height="24"
                             Margin="10 0 10 0"
                              IsEnabled="{Binding IsDiagramByColumnEnabled}"
-                             MaxWidth="60"/>
+                             MaxWidth="60"
+                             Text="{Binding DiagramColumn}"/>
 
                     <RadioButton Grid.Row="1"
                                      Content="By row:"
@@ -92,12 +98,14 @@
                                  Height="24"
                                  Margin="10 10 10 0"
                              MaxWidth="60"
-                             IsEnabled="{Binding IsDiagramByRowEnabled}"/>
+                             IsEnabled="{Binding IsDiagramByRowEnabled}"
+                             Text="{Binding DiagramRow}"/>
 
                     <Button Grid.Column="2"
                                 Grid.RowSpan="2"
                                 Margin="0 0 0 0"
-                                Content="Show diagram"/>
+                                Content="Show diagram"
+                            Command="{Binding ShowDiagramCommand}"/>
                 </Grid>
             </local:Container>
         </StackPanel>
